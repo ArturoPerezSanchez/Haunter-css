@@ -1,2 +1,2 @@
 # haunter-css
-Haunter pokemon CSS art
+Haunter pokemon made with pure CSS and HTML
