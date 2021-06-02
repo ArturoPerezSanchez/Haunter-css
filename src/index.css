@@ -1,0 +1,175 @@
+:root {
+  --haunter-background-light-color: #c0b0cd;
+  --haunter-background-normal-color: #a0879d;
+  --haunter-background-dark-color: #71616e;
+  --haunter-border-color: #433640;
+  --haunter-eye-shadow-color: #C4BCC0;
+  --haunter-eye-pupil-color: #222;
+  --custom-border:
+    drop-shadow(-3px 0 0 var(--haunter-border-color))
+    drop-shadow(0 3px 0 var(--haunter-border-color))
+    drop-shadow(3px 0 0 var(--haunter-border-color))
+    drop-shadow(0 -3px 0 var(--haunter-border-color));
+  --haunter-shape: polygon(
+    3% 8%,
+    40% 20%,
+    44% 18%,
+    55% 18%,
+    60% 21%,
+    97% 8%,
+    77% 35%,
+    100% 32%,
+    79% 50%,
+    91% 50%,
+    66% 69%,
+    64% 76%,
+    68% 85%,
+    61% 82%,
+    74% 96%,
+    56% 90%,
+    46% 76%,
+    47% 85%,
+    9% 49%,
+    22% 51%,
+    1% 31%,
+    22% 35%
+  );
+  --haunter-inner-shape: polygon(
+    18% 17%,
+    41% 26%,
+    46% 22%,
+    55% 22%,
+    59% 26%,
+    82% 19%,
+    72% 39%,
+    100% 32%,
+    80% 50%,
+    91% 50%,
+    62% 67%,
+    60% 78%,
+    54% 75%,
+    56% 83%,
+    43% 71%,
+    44% 75%,
+    9% 49%,
+    22% 51%,
+    1% 31%,
+    29% 39%
+  );
+  --haunter-eye-shape: polygon(0 0, 100% 85%, 70% 100%, 20% 85%);
+  --haunter-mouth-shape: polygon(
+    0% 0%,
+    18% 6%,
+    19% 19%,
+    26% 9%,
+    37% 12%,
+    41% 20%,
+    45% 12%,
+    55% 12%,
+    59% 20%,
+    63% 12%,
+    74% 9%,
+    81% 19%,
+    82% 7%,
+    99% 0%,
+    88% 25%,
+    65% 36%,
+    62% 27%,
+    58% 36%,
+    53% 27%,
+    50% 36%,
+    46% 27%,
+    42% 37%,
+    38% 27%,
+    35% 36%,
+    11% 25%
+  );
+  --haunter-nail-shape: polygon(0 30%, 30% 0, 60% 0, 100% 30%, 50% 100%);
+}
+
+html,
+body,
+.container {
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.haunter-container {
+  width: 300px;
+  height: 300px;
+  filter: var(--custom-border);
+
+  & .haunter {
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to bottom, var(--haunter-background-light-color) 49%, var(--haunter-background-dark-color) 49%);
+    clip-path: var(--haunter-shape);
+    & .inner-shadow {
+        width: 100%;
+        height: 100%;
+        background: var(--haunter-background-normal-color);
+        clip-path: var(--haunter-inner-shape);
+        transform: scale(1.02);
+    }
+
+    & .face-container{
+        position: absolute;
+        top: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        width: 100%;
+
+        & .face {
+            height: 45%;
+            width: 45%;
+
+        & .eyes-container {
+            display: flex;
+            justify-content: space-between;
+            filter: var(--custom-border);
+
+            & .eye{
+                width: 55px;
+                height: 50px;
+                background: var(--haunter-eye-shadow-color);
+                clip-path: var(--haunter-eye-shape);
+
+                &::before {
+                    content: '';
+                    display: block;
+                    width: 100%;
+                    height: 100%;
+                    background: white;
+                    transform: translate(2px,-6px);
+                    clip-path: var(--haunter-eye-shape);
+                }
+
+                &::after{
+                    position: absolute;
+                    content: '';
+                    display: block;
+                    width: 7px;
+                    height: 12px;
+                    background: var(--haunter-eye-pupil-color);
+                    transform: translate(32px, -25px);
+                }
+
+                &.right {
+                    transform: scale(-1, 1);
+                }
+            }
+        }
+
+        & .mouth_container {
+        }
+        }
+    }
+  }
+}
