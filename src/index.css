@@ -30,7 +30,7 @@ html, body, .container {
 
 .haunter-container {
   width: 300px;
-  height: 300px;
+  height: 320px;
   filter: var(--custom-border);
 }
 
@@ -129,7 +129,7 @@ html, body, .container {
 .face-container .face .mouth-shadow {
   position: absolute;
   width: 45%;
-  height: 48%;
+  height: 45%;
   background-color: var(--haunter-background-dark-color);
   clip-path: var(--haunter-mouth-shape);
   transform: translate(0, -100px);
