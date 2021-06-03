@@ -8,18 +8,21 @@
   --haunter-eye-pupil-color: #222;
   --haunter-mouth-dark-color: #855a6d;
   --haunter-mouth-light-color: #B5809A;
+  --haunter-body-gradient: linear-gradient( to bottom, var(--haunter-background-light-color) 49%, var(--haunter-background-dark-color) 49%);
   --custom-border: drop-shadow(-3px 0 0 var(--haunter-border-color)) drop-shadow(0 3px 0 var(--haunter-border-color)) drop-shadow(3px 0 0 var(--haunter-border-color)) drop-shadow(0 -3px 0 var(--haunter-border-color));
   --haunter-shape: polygon( 3% 8%, 40% 20%, 44% 18%, 55% 18%, 60% 21%, 97% 8%, 77% 35%, 100% 32%, 79% 50%, 91% 50%, 66% 69%, 64% 76%, 68% 85%, 61% 82%, 74% 96%, 56% 90%, 46% 76%, 47% 85%, 9% 49%, 22% 51%, 1% 31%, 22% 35%);
   --haunter-inner-shape: polygon( 18% 17%, 41% 26%, 46% 22%, 55% 22%, 59% 26%, 82% 19%, 72% 39%, 100% 32%, 80% 50%, 91% 50%, 62% 67%, 60% 78%, 54% 75%, 56% 83%, 43% 71%, 44% 75%, 9% 49%, 22% 51%, 1% 31%, 29% 39%);
   --haunter-eye-shape: polygon(0 0, 100% 85%, 70% 100%, 20% 85%);
   --haunter-mouth-shape: polygon( 0% 0%, 18% 6%, 19% 19%, 26% 9%, 37% 12%, 41% 20%, 45% 12%, 55% 12%, 59% 20%, 63% 12%, 74% 9%, 81% 19%, 82% 7%, 99% 0%, 88% 25%, 65% 36%, 62% 27%, 58% 36%, 53% 27%, 50% 36%, 46% 27%, 42% 37%, 38% 27%, 35% 36%, 11% 25%);
   --haunter-nail-shape: polygon(0 30%, 30% 0, 60% 0, 100% 30%, 50% 100%);
+  --haunter-hand-shape: polygon(15% 33%, 50% -10%, 85% 37%, 81% 79%, 50% 52%, 25% 75%, 15% 75%);
+  --haunter-palm-shape: polygon(50% 50%, 100% 100%, 45% 100%, 0 50%);
+  --haunter-claw-shape:  polygon(16% 48%, 29% 28%, 32% 11%, 43% 8%, 56% 19%, 78% 24%, 89% 40%, 79% 74%, 72% 62%, 56% 66%, 44% 58%, 48% 86%, 18% 67%);
 }
 
 html, body, .container {
   height: 100%;
   background: var(--background-color);
-  overflow: hidden;
 }
 
 .container {
@@ -31,17 +34,36 @@ html, body, .container {
 .haunter-container {
   width: 300px;
   height: 320px;
-  filter: var(--custom-border);
 }
 
 .haunter-container .haunter {
   width: 100%;
   height: 100%;
-  background-image: linear-gradient( to bottom, var(--haunter-background-light-color) 49%, var(--haunter-background-dark-color) 49%);
-  clip-path: var(--haunter-shape);
+  filter: var(--custom-border);
 }
 
-.haunter-container .haunter .inner-shadow {
+.haunter-container .haunter::before { 
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: var(--haunter-background-dark-color);
+  opacity:0.1;
+  clip-path: var(--haunter-shape);
+  transform: translate(-10px, 15px);
+  animation: haunterBodyShadowAnimation 2.25s infinite alternate ease-in-out;
+}
+
+.haunter-container .haunter .body {
+  width: 100%;
+  height: 100%;
+  background-image: var(--haunter-body-gradient);
+  clip-path: var(--haunter-shape);
+  animation: haunterBodyAnimation 2.25s infinite alternate ease-in-out;
+}
+
+.haunter-container .haunter .body .inner-shadow {
   width: 100%;
   height: 100%;
   background: var(--haunter-background-normal-color);
@@ -49,7 +71,7 @@ html, body, .container {
   transform: scale(1.02);
 }
 
-.haunter-container .haunter .face-container {
+.haunter-container .haunter .body .face-container {
   position: absolute;
   top: 0;
   display: flex;
@@ -95,6 +117,7 @@ html, body, .container {
   height: 12px;
   background: var(--haunter-eye-pupil-color);
   transform: translate(32px, -25px);
+  animation: eyesMove 4s infinite alternate ease-in-out;
 }
 
 .eyes-container .eye.right {
@@ -109,15 +132,15 @@ html, body, .container {
   z-index: 1;
 }
 
-.mouth-container .mouth{
+.mouth-container .mouth {
   width: 100%;
-  height: 100px;
+  height: 130px;
   transform: translate(0, 5px);
   clip-path: var(--haunter-mouth-shape);
   background-color: var(--haunter-mouth-dark-color);
 }
 
-.mouth-container .mouth::before{
+.mouth-container .mouth::before {
   content: '';
   display: block;
   width: 100%;
@@ -132,6 +155,173 @@ html, body, .container {
   height: 45%;
   background-color: var(--haunter-background-dark-color);
   clip-path: var(--haunter-mouth-shape);
-  transform: translate(0, -100px);
+  transform: translate(0, -88px);
   z-index: 0;
+}
+
+.haunter-container .claw {
+  position: absolute;
+  width: 100px;
+  height: 80px;
+  transform: translate(0, -130%) rotate(-20deg);
+  animation: haunterLeftClawAnimation 2s infinite alternate ease-in-out;
+}
+
+.haunter-container .claw-shadow {
+  width: 100%;
+  height: 100%;
+  filter: var(--custom-border);
+  position: absolute;
+  z-index: -3;
+  animation: haunterLeftClawShadowAnimation 2s infinite alternate ease-in-out;
+}
+
+.haunter-container .claw-shadow::before { 
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--haunter-background-dark-color);
+  opacity:0.1;
+  clip-path: var(--haunter-claw-shape);
+  transform: rotateZ(20deg) translate(-45px, -40px)  ;
+}
+
+.haunter-container .claw-shadow.right {
+  transform:  translate(12px, 3px);
+  animation: haunterRightClawShadowAnimation 2s infinite alternate ease-in-out;
+}
+
+.haunter-container .claw.right {
+  transform: translate(205%, -130%) rotateZ(20deg) rotateY(-180deg);
+  animation: haunterRightClawAnimation 2s infinite alternate ease-in-out;
+}
+
+.claw .nails {
+  display: flex;
+  filter: var(--custom-border);
+  width: 85%;
+  height: 75%;
+}
+
+.nails .nail {
+  width: 25%;
+  height: 75%;
+  background: var(--haunter-body-gradient);
+  clip-path: var(--haunter-nail-shape);
+}
+
+.nails .nail::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--haunter-background-normal-color);
+  transform: translate(0, -2px) scale(1.1, 0.75);
+  clip-path: var(--haunter-nail-shape);
+}
+
+.nails .nail.left {
+  transform: translate(0, 25px) rotate(-15deg);
+}
+
+.nails .nail.middle {
+  transform: translate(0, 0px);
+}
+
+.nails .nail.right {
+  transform: translate(0, 25px) rotate(15deg);
+}
+
+.claw .hand-container {
+  position: absolute;
+  width: 85%;
+  height: 50px;
+  filter: var(--custom-border);
+  transform: translate(-10px, -50px);
+  z-index: -1;
+}
+
+.claw .hand-container .hand {
+  width: 100%;
+  height: 100%;
+  background: var(--haunter-background-normal-color);
+  clip-path: var(--haunter-hand-shape);
+}
+
+.claw .palm-container {
+  position: absolute;
+  width: 45%;
+  height: 50px;
+  filter: var(--custom-border);
+  transform: translate(10px, -55px);
+  z-index: -2;
+}
+
+.claw .palm-container .palm {
+  width: 100%;
+  height: 100%;
+  background: var(--haunter-background-dark-color);
+  clip-path: var(--haunter-palm-shape);
+}
+
+@keyframes haunterLeftClawAnimation {
+  0% {
+    transform: translate(0, -220%) rotate(-20deg);
+  }
+
+  100% {
+    transform: translate(0, -155%) rotate(-20deg);
+  }
+}
+
+@keyframes haunterRightClawAnimation {
+  0% {
+    transform: translate(205%, -220%) rotateZ(20deg) rotateY(-180deg)
+  }
+
+  100% {
+    transform: translate(205%, -155%) rotateZ(20deg) rotateY(-180deg)
+  }
+}
+
+@keyframes haunterBodyAnimation {
+  100% {
+    transform: translate(0, -20%)
+  }
+}
+
+@keyframes haunterBodyShadowAnimation {
+  0%{
+    transform: translate(-10px, 15px);
+  }
+  100% { 
+    transform: translate(-30px, calc(15px - 15%)) rotateX(-30deg);
+  }
+}
+
+@keyframes haunterLeftClawShadowAnimation {
+  0% {
+    transform: translate(-15px, calc(15px - 45%)) rotateX(-30deg);
+  }
+}
+
+@keyframes haunterRightClawShadowAnimation {
+  100%{
+    transform: translate(12px, calc(23px - 45%)) rotateX(30deg);
+  }
+  0% {
+    transform:  translate(18px, 3px);
+  }
+}
+
+@keyframes eyesMove {
+  0% {
+    transform: translate(32px, -25px) scale(1);
+    background: black;
+  }
+  100% {
+    transform: translate(32px, -15px) scale(1.25);
+    background: #aaa;
+  }
 }
