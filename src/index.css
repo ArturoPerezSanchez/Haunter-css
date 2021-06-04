@@ -1,5 +1,5 @@
 :root {
-  --background-color: radial-gradient( #8590a5 35%, #413b59);
+  --background-color: radial-gradient( #8590a5, #413b59 85%);
   --haunter-background-light-color: #c0b0cd;
   --haunter-background-normal-color: #a0879d;
   --haunter-background-dark-color: #71616e;
@@ -24,6 +24,14 @@
 html, body, .container {
   height: 100%;
   background: var(--background-color);
+  overflow: hidden;
+}
+
+footer{
+  position: absolute;
+  top: 97%;
+  text-align: right;
+  width: 98%;
 }
 
 .container {
